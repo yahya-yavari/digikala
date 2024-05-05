@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@import url(../public/yekanbakh/fontiran.css);
+html{
+    @apply font-bodys;
+}
+@tailwind utilities;    
+
+@layer components{
+    .after-shop-btn{
+
+        color:theme('colors.primaryRed');
+        position: relative;
+        overflow: hidden;
+    }
+    .after-shop-btn::after{ 
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 88%;
+            height: 6px;
+            background-color: theme('colors.primaryRed');
+            border-radius: theme('borderRadius.global');  
+    }
+}
