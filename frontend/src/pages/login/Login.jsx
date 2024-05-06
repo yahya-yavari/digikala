@@ -1,14 +1,54 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import { HiOutlineLogin } from "react-icons/hi";
 import BottomNav from "../../components/bottom navigation/BottomNav";
+import { apiCall } from "../../utils/Axios";
 
 export default function Login() {
+
+   const [phone, setPhone] = useState("");
+
+   const navigating = useNavigate();
+
+   useEffect(() => {
+      const loggedInUser = localStorage.getItem("access");
+      if (loggedInUser) {
+         setUser(loggedInUser);
+         return navigating('/')
+      }
+   })
+
+   const login = async (phone) => {
+      try {
+
+         const { data, status } = apiCall.post("user/token/", { phone })
+
+         if (status === 200) {
+            // localStorage.setItem("access", data.access)
+            // localStorage.setItem("refresh", data.refresh)
+            alert("کد تایید شما ارسال شد")
+         }
+      } catch (error) {
+         alert(error);
+      }
+   }
+
+   const handleLogin = (e) => {
+      const { data, error } = login(phone);
+
+      if (!error) {
+         return navigating('/otp')
+      }
+      else {
+         return navigating('/login')
+      }
+   }
+
    return (
       <>
          <div className="flex items-center justify-center h-screen text-primaryText">
-            <form className="flex flex-col p-5 w-full xl:p-8 xl:w-[420px] xl:border-[1px] rounded-global border-slate-300">
+            <form onSubmit={handleLogin} className="flex flex-col p-5 w-full xl:p-8 xl:w-[420px] xl:border-[1px] rounded-global border-slate-300">
                <div className="w-full mb-6  flex justify-center">
                   <img
                      src="./image/logo.svg"
@@ -24,28 +64,16 @@ export default function Login() {
                   <div>ثبت نام</div>
                </div>
 
-               <p className="mb-3">سلام!</p>
+               <p className="mb-3">ثبت نام/ورود</p>
 
                <div className="mb-6">
-                  <label className="">لطفا نام کاربری خود را وارد کنید</label>
+                  <label className="">لطفاشماره تلفن خود را وارد کنید</label>
                   <input
+                     onChange={(e) => setPhone(e.target.value)}
                      className="w-full bg-primaryB rounded-global p-2.5 border-b-[2px] border-b-primaryRed
                   focus:ring-blue-400 focus:ring-2 focus:border-0 focus:outline-none duration-100 mt-1 mb-0.5"
-                     type="email"
-                     name=""
-                     id=""
-                  />
-                  <span className="text-primaryRed">
-                     لطفا این قسمت را خالی نگذارید
-                  </span>
-               </div>
-               <div className="mb-5">
-                  <label className="">لطفا رمز عبور خود را وارد کنید</label>
-                  <input
-                     className="w-full bg-primaryB rounded-global p-2.5 border-b-[2px] border-b-primaryRed
-                  focus:ring-blue-400 focus:ring-2 focus:border-0 focus:outline-none duration-100 mt-1 mb-0.5"
-                     type="text"
-                     name=""
+                     type="number"
+                     name="phone"
                      id=""
                   />
                   <span className="text-primaryRed">

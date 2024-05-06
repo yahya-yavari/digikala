@@ -4,6 +4,7 @@ import { createContext, useContext } from "react";
 // import {routes} from "./routes";
 import Index from "./pages/index/index";
 import Login from "./pages/login/Login";
+import OTP from "./pages/login/OTP";
 import Register from "./pages/register/Register";
 import ShopCard from "./pages/shop cart/ShopCart";
 import Category from "./pages/category/Category";
@@ -18,11 +19,12 @@ function App() {
 
    return (
       <div className="relative">
-         <Context.Provider value={{bottomActive,setBottomActive}}>
+         <Context.Provider value={{ bottomActive, setBottomActive }}>
             <Routes>
-               
+
                <Route path="/" element={<Index />} />
                <Route path="/login" element={<Login />} />
+               <Route path="/otp" element={<OTP />} />
                {/* <Route path="/register" element={<Register />} /> */}
                <Route path="/shop-cart" element={<ShopCard />} />
                <Route path="/category" element={<Category />} />

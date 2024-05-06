@@ -72,6 +72,9 @@ class Gallery(models.Model):
     def __str__(self):
         return self.product.title
     
+    def __unicode__(self):
+        return self.product.title
+    
     class Meta:
         managed = True
         verbose_name = 'Product Image'
@@ -87,6 +90,9 @@ class Color(models.Model):
     def __str__(self):
         return self.product.title
     
+    def __unicode__(self):
+        return self.product.title
+    
     class Meta:
         managed = True
         verbose_name = 'Product Color'
@@ -100,6 +106,9 @@ class Feature(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
+        return self.product.title
+    
+    def __unicode__(self):
         return self.product.title
     
     class Meta:
