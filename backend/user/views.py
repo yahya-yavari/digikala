@@ -1,5 +1,3 @@
-from django.shortcuts import get_object_or_404
-
 from rest_framework import generics, permissions, response, status
 from rest_framework_simplejwt import tokens
 
@@ -51,12 +49,11 @@ class CheckOTPAPIView(generics.GenericAPIView):
             otp = s.validated_data["otp"]
             user_otp = OTP.objects.get(otp=otp)
             if  user_otp is not None:
-                print(user_otp)
                 pk = user_otp.user
-                print(pk)
                 user = User.objects.get(pk=pk.pk)
                 token = tokens.RefreshToken.for_user(user)
                 data = {"refresh": str(token), "access": str(token.access_token)}
+                del user_otp
                 # deleteOTP(user=user)
                 return response.Response(data=data, status=status.HTTP_200_OK)
             else:
