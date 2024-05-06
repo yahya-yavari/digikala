@@ -51,6 +51,8 @@ INSTALLED_APPS = [
 
     'api.apps.ApiConfig',
     'user.apps.UserConfig',
+    'store.apps.StoreConfig',
+    'club.apps.ClubConfig',
 ]
 
 MIDDLEWARE = [
