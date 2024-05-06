@@ -57,7 +57,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = AllUser()
 
     def __str__(self) -> str:
-        return self.phone
+        return f"{self.pk}"
     
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"

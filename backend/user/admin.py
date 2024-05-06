@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import User, Profile
+from .models import User, Profile, OTP 
 
 
 class Admin(UserAdmin):
@@ -10,7 +10,7 @@ class Admin(UserAdmin):
     list_filter = ('is_active',)
     fieldsets = ()
     search_fields = ('pk', 'phone')
-    ordering = ('joined_at',)
+    ordering = ('pk',)
 
 
 class PAdmin(admin.ModelAdmin):
@@ -21,3 +21,10 @@ admin.site.register(User, Admin)
 
 
 admin.site.register(Profile, PAdmin)
+
+
+class OTPAdmin(admin.ModelAdmin):
+    list_display = ['user', 'otp']
+
+
+admin.site.register(OTP, OTPAdmin)

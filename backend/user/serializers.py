@@ -3,14 +3,12 @@ from rest_framework import serializers
 from .models import Profile, User 
 
 
-class CustomUserSerializer(serializers.ModelSerializer):
+class CustomUserSerializer(serializers.Serializer):
     """
-    Serializer class to serialize CustomUser model.
+    Serializer class to serialize User request
     """
 
-    class Meta:
-        model = User
-        fields = ("pk", "phone")
+    phone = serializers.CharField()
 
 
 class UserRegisterationSerializer(serializers.ModelSerializer):
