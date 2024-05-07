@@ -19,10 +19,13 @@ class FeatureInline(admin.TabularInline):
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('title',)
+    prepopulated_fields = {'slug': ('title',)}
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('title',)
+    list_display = ('title', 'is_available')
+    list_filter = ['is_available']
+    prepopulated_fields = {'slug': ('title',)}
     inlines = [GalleryInline, ColorInline, FeatureInline]
 
 

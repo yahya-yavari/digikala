@@ -1,5 +1,4 @@
 from itertools import product
-from turtle import title
 from django.db import models
 from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
@@ -11,7 +10,7 @@ User = settings.AUTH_USER_MODEL
 class Category(models.Model):
     title       = models.CharField(max_length = 50, unique=True)
     description = models.CharField(max_length = 256)
-    slug        = models.SlugField(max_length = 100, unique=True)
+    slug        = models.SlugField(max_length = 100, unique=True, allow_unicode=True)
     created_at  = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
@@ -27,17 +26,18 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    numbers      = RegexValidator(r'^[0-9a]*$', message='only numbers')
-    title        = models.CharField(max_length = 50, unique=True)
-    slug         = models.SlugField(max_length = 100, unique=True)
-    description  = models.CharField(max_length = 256)
-    price        = models.DecimalField(max_digits=12, decimal_places=0)
-    in_stock     = models.PositiveIntegerField()
-    is_available = models.BooleanField(default=True)
-    rating       = models.FloatField(validators=[MinValueValidator(1.0), MaxValueValidator(10.0)])
-    weight       = models.PositiveIntegerField()
-    barcode      = models.CharField(max_length=12, validators=[numbers])
-    category     = models.ForeignKey(Category, on_delete=models.CASCADE)
+    numbers         = RegexValidator(r'^[0-9a]*$', message='only numbers')
+    title           = models.CharField(max_length = 50, unique=True)
+    slug            = models.SlugField(max_length = 100, unique=True, allow_unicode=True)
+    description     = models.CharField(max_length = 256)
+    price           = models.DecimalField(max_digits=12, decimal_places=0)
+    in_stock        = models.PositiveIntegerField()
+    is_available    = models.BooleanField(default=True)
+    rating          = models.FloatField(validators=[MinValueValidator(1.0), MaxValueValidator(10.0)])
+    weight          = models.PositiveIntegerField()
+    barcode         = models.CharField(max_length=12, validators=[numbers])
+    shipping_amount = models.DecimalField(max_digits=12, decimal_places=0, default=0)
+    category        = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     def gallery(self):
         return Gallery.objects.filter(product=self)

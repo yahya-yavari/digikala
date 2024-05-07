@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions, response, status
+from rest_framework import generics, permissions, response, status, filters
 
 from .models import Category, Product, Gallery, Color, Feature
 from .serializers import (
@@ -42,3 +42,13 @@ class SingleProductAPIView(generics.RetrieveAPIView):
         pk = self.kwargs['pk']
         c = Product.objects.get(pk=pk)
         return c
+
+
+class ProductSearchAPIView(generics.ListAPIView):
+    """"""
+
+    queryset = Product.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = ProductSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title', 'description']

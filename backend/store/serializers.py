@@ -55,6 +55,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'rating',
             'barcode',
             'weight',
+            'shipping_amount'
             'category',
             'gallery',
             'color',
