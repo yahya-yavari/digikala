@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { apiCall } from "../../utils/Axios";
+import { setUser } from '../../utils/Authentication';
 
 function OTP() {
 
@@ -18,6 +19,7 @@ function OTP() {
                 localStorage.setItem("access", data.access)
                 localStorage.setItem("refresh", data.refresh)
                 alert("خوش آمدید")
+                setUser(data.access)
             }
 
         } catch (error) {

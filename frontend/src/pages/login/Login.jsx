@@ -14,7 +14,6 @@ export default function Login() {
    useEffect(() => {
       const loggedInUser = localStorage.getItem("access");
       if (loggedInUser) {
-         setUser(loggedInUser);
          return navigating('/')
       }
    })
@@ -35,6 +34,9 @@ export default function Login() {
    }
 
    const handleLogin = (e) => {
+
+      e.preventDefault();
+
       const { data, error } = login(phone);
 
       if (!error) {

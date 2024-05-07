@@ -1,7 +1,8 @@
-from itertools import product
 from django.db import models
 from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
+
+from .enums import Payment_Status
 
 
 User = settings.AUTH_USER_MODEL
@@ -115,3 +116,107 @@ class Feature(models.Model):
         managed = True
         verbose_name = 'Product Feature'
         verbose_name_plural = 'Product Features'
+
+
+class Cart(models.Model):
+    user            = models.ForeignKey(User, on_delete=models.CASCADE)
+    product         = models.ForeignKey(Product, on_delete=models.CASCADE)
+    price           = models.DecimalField(max_digits=12, decimal_places=2)
+    shipping_amount = models.DecimalField(max_digits=12, decimal_places=2)
+    total           = models.DecimalField(max_digits=12, decimal_places=2)
+    created_at      = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user} {self.product} {self.total}"
+
+    def __unicode__(self):
+        return f"{self.user} {self.product} {self.total}"
+    
+    class Meta:
+        managed = True
+        verbose_name = 'Cart'
+        verbose_name_plural = 'Carts'
+
+
+class CartOrder(models.Model):
+    user           = models.ForeignKey(User, on_delete=models.CASCADE)
+    cart           = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    qty            = models.PositiveIntegerField()
+    price          = models.DecimalField(max_digits=12, decimal_places=2)
+    sub_total      = models.DecimalField(max_digits=12, decimal_places=2)
+    tax            = models.DecimalField(max_digits=12, decimal_places=2)
+    total          = models.DecimalField(max_digits=12, decimal_places=2)
+    created_at     = models.DateTimeField(auto_now_add=True)
+
+    # TODO : User informations like address, city etc.
+    phone          = models.CharField(max_length=11)
+    city           = models.CharField(max_length=30)
+    address        = models.CharField(max_length=256)
+    plaque         = models.CharField(max_length=5)
+    
+    # TODO : Payment status
+    payment_status = models.PositiveSmallIntegerField(choices=Payment_Status.STATUS, default=1)
+    
+    def __str__(self):
+        return f"{self.user} {self.cart} {self.phone} {self.plaque} {self.payment_status}"
+
+    def __unicode__(self):
+        return f"{self.user} {self.cart} {self.phone} {self.plaque} {self.payment_status}"
+    
+    class Meta:
+        managed = True
+        verbose_name = 'Cart Order'
+        verbose_name_plural = 'Cart Orders'
+
+
+class CartOrderItem(models.Model):
+    
+
+    def __str__(self):
+        return 
+
+    def __unicode__(self):
+        return 
+
+
+class Payment(models.Model):
+    
+
+    def __str__(self):
+        return 
+
+    def __unicode__(self):
+        return 
+
+
+
+class Wishlist(models.Model):
+    
+
+    def __str__(self):
+        return 
+
+    def __unicode__(self):
+        return 
+
+
+
+
+class Comment(models.Model):
+    
+
+    def __str__(self):
+        return 
+
+    def __unicode__(self):
+        return 
+
+
+class Complain(models.Model):
+    
+
+    def __str__(self):
+        return 
+
+    def __unicode__(self):
+        return 
