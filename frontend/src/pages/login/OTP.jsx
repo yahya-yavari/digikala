@@ -6,16 +6,17 @@ import { apiCall } from "../../utils/Axios";
 
 function OTP() {
 
-    const [OTP, setOTP] = useState("");
+    const [otp, setotp] = useState("");
 
     const navigator = useNavigate();
 
-    const fetchOTP = async (OTP) => {
+    const fetchotp = async (otp) => {
         try {
 
-            const { data, status } = apiCall.post("user/otp/", { OTP })
+            const { data, status } = await apiCall.post("user/otp/", { otp })
 
             if (status === 200) {
+                console.log(data.access);
                 localStorage.setItem("access", data.access)
                 localStorage.setItem("refresh", data.refresh)
                 alert("خوش آمدید")
@@ -27,8 +28,11 @@ function OTP() {
         }
     }
 
-    const handlesubmit = () => {
-        const { data, error } = fetchOTP(OTP)
+    const handlesubmit = (e) => {
+
+        e.preventDefault();
+
+        const { data, error } = fetchotp(otp)
 
         if (!error) {
             return navigator("/")
@@ -43,11 +47,12 @@ function OTP() {
                     <div className="mb-6">
                         <label className="">رمز تایید را وارد نمایید</label>
                         <input
-                            onChange={(e) => setOTP(e.target.value)}
+                            value={otp}
+                            onChange={(e) => setotp(e.target.value)}
                             className="w-full bg-primaryB rounded-global p-2.5 border-b-[2px] border-b-primaryRed
                   focus:ring-blue-400 focus:ring-2 focus:border-0 focus:outline-none duration-100 mt-1 mb-0.5"
-                            type="phone"
-                            name=""
+                            type="number"
+                            name="otp"
                             id=""
                         />
                         <span className="text-primaryRed">
