@@ -191,32 +191,56 @@ class Payment(models.Model):
 
 
 class Wishlist(models.Model):
-    
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user    = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return 
+        return f'{self.user} {self.product}'
 
     def __unicode__(self):
-        return 
+        return f'{self.user} {self.product}'
+    
+    class Meta:
+        managed = True
+        verbose_name = 'Wishlist'
+        verbose_name_plural = 'Wishlists'
 
 
 
 
 class Comment(models.Model):
-    
+    product    = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user       = models.ForeignKey(User, on_delete=models.CASCADE)
+    txt        = models.CharField(max_length = 256)
+    active     = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return 
 
     def __unicode__(self):
         return 
+    
+    class Meta:
+        managed = True
+        verbose_name = 'Comment'
+        verbose_name_plural = 'Comments'
 
 
 class Complain(models.Model):
-    
+    product    = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user       = models.ForeignKey(User, on_delete=models.CASCADE)
+    txt        = models.CharField(max_length = 256)
+    checked    = models.BooleanField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return 
 
     def __unicode__(self):
         return 
+    
+    class Meta:
+        managed = True
+        verbose_name = 'Complain'
+        verbose_name_plural = 'Complains'

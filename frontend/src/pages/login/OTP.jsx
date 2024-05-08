@@ -16,7 +16,7 @@ function OTP() {
             const { data, status } = await apiCall.post("user/otp/", { otp })
 
             if (status === 200) {
-                console.log(data.access);
+                // console.log(data.access);
                 localStorage.setItem("access", data.access)
                 localStorage.setItem("refresh", data.refresh)
                 alert("خوش آمدید")
@@ -24,7 +24,7 @@ function OTP() {
             }
 
         } catch (error) {
-            alert(error)
+            alert(error.detail)
         }
     }
 
