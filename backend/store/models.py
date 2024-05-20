@@ -12,7 +12,7 @@ class Category(models.Model):
     title       = models.CharField(max_length = 50, unique=True)
     description = models.CharField(max_length = 256)
     slug        = models.SlugField(max_length = 100, unique=True, allow_unicode=True)
-    created_at  = models.DateTimeField(auto_now_add=True)
+    # created_at  = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return self.title
@@ -32,7 +32,8 @@ class Product(models.Model):
     slug            = models.SlugField(max_length = 100, unique=True, allow_unicode=True)
     description     = models.CharField(max_length = 256)
     price           = models.DecimalField(max_digits=12, decimal_places=0)
-    in_stock        = models.PositiveIntegerField()
+    tax             = models.DecimalField(max_digits=12, decimal_places=0)
+    in_stock        = models.PositiveIntegerField(validators=[MinValueValidator(0)])
     is_available    = models.BooleanField(default=True)
     rating          = models.FloatField(validators=[MinValueValidator(1.0), MaxValueValidator(10.0)])
     weight          = models.PositiveIntegerField()
@@ -68,7 +69,7 @@ class Gallery(models.Model):
     product    = models.ForeignKey(Product, on_delete=models.CASCADE)
     image      = models.ImageField(upload_to='gallery/')
     active     = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    # created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return self.product.title
@@ -86,7 +87,7 @@ class Color(models.Model):
     product    = models.ForeignKey(Product, on_delete=models.CASCADE)
     active     = models.BooleanField(default=True)
     color_code = models.CharField(max_length = 15)
-    created_at = models.DateTimeField(auto_now_add=True)
+    # created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return self.product.title
@@ -104,7 +105,7 @@ class Feature(models.Model):
     product    = models.ForeignKey(Product, on_delete=models.CASCADE)
     title      = models.CharField(max_length = 256)
     content    = models.CharField(max_length = 256)
-    created_at = models.DateTimeField(auto_now_add=True)
+    # created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.product.title
@@ -124,7 +125,8 @@ class Cart(models.Model):
     price           = models.DecimalField(max_digits=12, decimal_places=2)
     shipping_amount = models.DecimalField(max_digits=12, decimal_places=2)
     total           = models.DecimalField(max_digits=12, decimal_places=2)
-    created_at      = models.DateTimeField(auto_now_add=True)
+    tax             = models.DecimalField(max_digits=12, decimal_places=2)
+    # created_at      = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.user} {self.product} {self.total}"
@@ -146,7 +148,7 @@ class CartOrder(models.Model):
     sub_total      = models.DecimalField(max_digits=12, decimal_places=2)
     tax            = models.DecimalField(max_digits=12, decimal_places=2)
     total          = models.DecimalField(max_digits=12, decimal_places=2)
-    created_at     = models.DateTimeField(auto_now_add=True)
+    # created_at     = models.DateTimeField(auto_now_add=True)
 
     # TODO : User informations like address, city etc.
     phone          = models.CharField(max_length=11)
@@ -213,7 +215,7 @@ class Comment(models.Model):
     user       = models.ForeignKey(User, on_delete=models.CASCADE)
     txt        = models.CharField(max_length = 256)
     active     = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
+    # created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return 
@@ -232,7 +234,7 @@ class Complain(models.Model):
     user       = models.ForeignKey(User, on_delete=models.CASCADE)
     txt        = models.CharField(max_length = 256)
     checked    = models.BooleanField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    # created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return 
